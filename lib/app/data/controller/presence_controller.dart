@@ -60,7 +60,6 @@ class PresenceController extends GetxController {
             'Tidak bisa absen', 'Lokasi kamu lebih dari 200 meter dari kantor');
       }
       isLoading.value = false;
-      Get.offAllNamed(Routes.HOME);
     } else {
       isLoading.value = false;
       Get.snackbar("Terjadi kesalahan", determinePosition["message"]);
@@ -68,7 +67,7 @@ class PresenceController extends GetxController {
     }
   }
 
-  Future<void> processPresence(
+  Future processPresence(
       Position position, String address, double distance) async {
     try {
       isLoading.value = true;
@@ -80,7 +79,7 @@ class PresenceController extends GetxController {
       );
       isLoading.value = false;
       if (res.data['success'] == true) {
-        Get.back();
+        Get.offAllNamed(Routes.HOME);
         CustomToast.successToast("Success", res.data['message'].toString());
       } else {
         Get.rawSnackbar(
@@ -94,7 +93,7 @@ class PresenceController extends GetxController {
     }
   }
 
-  Future<void> processPresencePulang(String id) async {
+  Future processPresencePulang(String id) async {
     try {
       isLoading.value = true;
       var res = await PresenceApi().absenPulang(
@@ -104,7 +103,7 @@ class PresenceController extends GetxController {
       );
       isLoading.value = false;
       if (res.data['success'] == true) {
-        Get.back();
+        Get.offAllNamed(Routes.HOME);
         CustomToast.successToast("Success", res.data['message'].toString());
       } else {
         Get.rawSnackbar(
